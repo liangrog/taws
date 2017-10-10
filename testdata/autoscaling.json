@@ -1,0 +1,67 @@
+{
+  AutoScalingInstances: [
+    {
+      AutoScalingGroupName: "nodes.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2b",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-027bbc5ec8a514331",
+      LaunchConfigurationName: "nodes.k8s.merlingroup.co-20171001235907",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "master-ap-southeast-2b.masters.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2b",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-042d5c8d0c74e3b1e",
+      LaunchConfigurationName: "master-ap-southeast-2b.masters.k8s.merlingroup.co-20171002004154",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "master-ap-southeast-2c.masters.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2c",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-05a5bc6996333fc3f",
+      LaunchConfigurationName: "master-ap-southeast-2c.masters.k8s.merlingroup.co-20171002005242",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "nodes.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2a",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-070659b1d1758f205",
+      LaunchConfigurationName: "nodes.k8s.merlingroup.co-20171001235907",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "master-ap-southeast-2a.masters.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2a",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-09a52c34466a1a81c",
+      LaunchConfigurationName: "master-ap-southeast-2a.masters.k8s.merlingroup.co-20171002003312",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "bastions.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2b",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-09f8babc4e3625a29",
+      LaunchConfigurationName: "bastions.k8s.merlingroup.co-20170828033532",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    },
+    {
+      AutoScalingGroupName: "nodes.k8s.merlingroup.co",
+      AvailabilityZone: "ap-southeast-2c",
+      HealthStatus: "HEALTHY",
+      InstanceId: "i-0af7eb05c83b6c591",
+      LaunchConfigurationName: "nodes.k8s.merlingroup.co-20171001235907",
+      LifecycleState: "InService",
+      ProtectedFromScaleIn: false
+    }
+  ]
+} 
