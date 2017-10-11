@@ -14,20 +14,34 @@ import (
 
 const (
 	DefaultInventoryFileName = "ec2-inventory"
+
+	FlagValueFilterByTags    = "tags"
+	FlagValueFilterByAsgName = "asg-name"
+	FlagValueGroupByASG      = "asg"
 )
 
 // get-inventory options
 type FlagsGetInventory struct {
-	// Filter by autoscaling group name string
-	AsgNameFilter string
+	// Filter
+	// Available:
+	// tags
+	// asg-name
+	FilterBy string
+
+	// If filter by tags
+	// what key and values
+	// format key=value;key=value
+	FilterValue string
+
+	// Group by
+	// Available: asg
+	GroupBy string
+
+	// Use Public IP
+	UsePublicIp bool
 
 	// Output go file name
-	InventoryFile string
-}
-
-// Check if k8s context is set
-func (ops *FlagsGetInventory) HasAsgNameFilter() bool {
-	return len(ops.AsgNameFilter) > 0
+	ToFile string
 }
 
 // Global
@@ -42,7 +56,7 @@ func NewOpsGetInventory() *FlagsGetInventory {
 	}
 
 	OpsGetInventory = new(FlagsGetInventory)
-	OpsGetInventory.InventoryFile = filepath.Join(cwd, DefaultInventoryFileName)
+	OpsGetInventory.ToFile = filepath.Join(cwd, DefaultInventoryFileName)
 
 	return OpsGetInventory
 }
@@ -50,11 +64,56 @@ func NewOpsGetInventory() *FlagsGetInventory {
 // Get inventory output as a file
 func GetInventory() {
 	// Get all instances under autoscaling
+	ec2Input := new(ec2.DescribeInstancesInput)
 
-	// Place holder for instance ids
-	var instIds []*string
+	asgInsts := make(map[string][]string)
+	if OpsGetInventory.GroupBy == FlagValueGroupByASG {
+		asgInsts = GetInstanceIdsViaASG()
+		var instIds []*string
+
+		// Get all instance Ids into a list
+		for _, g := range asgInsts {
+			for idx, _ := range g {
+				instIds = append(instIds, &g[idx])
+			}
+		}
+
+		ec2Input.InstanceIds = instIds
+	}
+
+	insts := GetInstances(ec2Input)
+
+	var buf bytes.Buffer
+	buf.WriteString(fmt.Sprintf("\n"))
+
+	switch OpsGetInventory.GroupBy {
+	case FlagValueGroupByASG:
+		// Inventory mapping: autoscaling group -> instance IPs
+		for k, v := range asgInsts {
+			buf.WriteString(fmt.Sprintf("[%s]\n", k))
+			for _, v2 := range v {
+				buf.WriteString(fmt.Sprintf("%s\n", insts[v2]))
+			}
+
+			buf.WriteString(fmt.Sprintf("\n"))
+		}
+	default:
+		for _, ip := range insts {
+			buf.WriteString(fmt.Sprintf("%s\n", ip))
+		}
+	}
+
+	// Write to file
+	err := ioutil.WriteFile(OpsGetInventory.ToFile, []byte(buf.String()), 0664)
+	if err != nil {
+		utils.ExitWithError(err)
+	}
+}
+
+// Get instance IDs via autoscaling group
+func GetInstanceIdsViaASG() map[string][]string {
 	// Autoscaling group to instance ids mapping
-	asInsts := make(map[string][]string)
+	insts := make(map[string][]string)
 
 	for {
 		as := autoscaling.New(utils.AwsSess)
@@ -67,13 +126,12 @@ func GetInventory() {
 
 		for _, d := range asOut.AutoScalingInstances {
 			// If set search context
-			if OpsGetInventory.HasAsgNameFilter() &&
-				!strings.Contains(*d.AutoScalingGroupName, OpsGetInventory.AsgNameFilter) {
+			if OpsGetInventory.FilterBy == FlagValueFilterByAsgName &&
+				!strings.Contains(*d.AutoScalingGroupName, OpsGetInventory.FilterValue) {
 				continue
 			}
 
-			asInsts[*d.AutoScalingGroupName] = append(asInsts[*d.AutoScalingGroupName], *d.InstanceId)
-			instIds = append(instIds, d.InstanceId)
+			insts[*d.AutoScalingGroupName] = append(insts[*d.AutoScalingGroupName], *d.InstanceId)
 		}
 
 		if asOut.NextToken == nil {
@@ -81,14 +139,17 @@ func GetInventory() {
 		}
 	}
 
-	// Get instance private IPs
+	return insts
+}
+
+// Get EC2 instances
+func GetInstances(input *ec2.DescribeInstancesInput) map[string]string {
+	// Get instance IPs
 	idToIp := make(map[string]string)
+
 	for {
 		ec := ec2.New(utils.AwsSess)
-		ecIn := &ec2.DescribeInstancesInput{
-			InstanceIds: instIds,
-		}
-		ecOut, err := ec.DescribeInstances(ecIn)
+		ecOut, err := ec.DescribeInstances(input)
 
 		if err != nil {
 			utils.ExitWithError(err)
@@ -96,7 +157,23 @@ func GetInventory() {
 
 		for _, r := range ecOut.Reservations {
 			for _, i := range r.Instances {
-				idToIp[*i.InstanceId] = *i.PrivateIpAddress
+				// If there is tag filter
+				if OpsGetInventory.FilterBy == FlagValueFilterByTags &&
+					!FilterTags(i.Tags, OpsGetInventory.FilterValue) {
+					continue
+				}
+
+				// If use public IP
+				if OpsGetInventory.UsePublicIp {
+					if i.PublicIpAddress != nil {
+						idToIp[*i.InstanceId] = *i.PublicIpAddress
+					} else {
+						fmt.Printf("Warning: instance %s, private IP %s has no public IP address, ignored from inventory\n", *i.InstanceId, *i.PrivateIpAddress)
+						continue
+					}
+				} else {
+					idToIp[*i.InstanceId] = *i.PrivateIpAddress
+				}
 			}
 		}
 
@@ -105,20 +182,27 @@ func GetInventory() {
 		}
 	}
 
-	// Inventory mapping: autoscaling group -> instance IPs
-	var buf bytes.Buffer
-	for k, v := range asInsts {
-		buf.WriteString(fmt.Sprintf("[%s]\n", k))
-		for _, v2 := range v {
-			buf.WriteString(fmt.Sprintf("%s\n", idToIp[v2]))
+	return idToIp
+}
+
+// Check if tags contains all tag filter value
+func FilterTags(tags []*ec2.Tag, fv string) bool {
+	tagSets := strings.Split(fv, ";")
+	total := len(tagSets)
+	count := 0
+	for _, ts := range tagSets {
+		tv := strings.Split(ts, "=")
+		for _, t := range tags {
+			if *t.Key == tv[0] &&
+				*t.Value == tv[1] {
+				count++
+			}
 		}
-
-		buf.WriteString(fmt.Sprintf("\n"))
 	}
 
-	// Write to file
-	err := ioutil.WriteFile(OpsGetInventory.InventoryFile, []byte(buf.String()), 0664)
-	if err != nil {
-		utils.ExitWithError(err)
+	if total == count {
+		return true
 	}
+
+	return false
 }
