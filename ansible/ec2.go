@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/aws/aws-sdk-go/service/autoscaling"
+	"github.com/aws/aws-sdk-go/service/autoscaling/autoscalingiface"
 	"github.com/aws/aws-sdk-go/service/ec2"
+	"github.com/aws/aws-sdk-go/service/ec2/ec2iface"
 	"github.com/liangrog/taws/utils"
 	"io/ioutil"
 	"os"
@@ -110,15 +112,17 @@ func GetInventory() {
 	}
 }
 
+// for mocking test
+var svcAsg autoscalingiface.AutoScalingAPI = autoscaling.New(utils.AwsSess)
+
 // Get instance IDs via autoscaling group
 func GetInstanceIdsViaASG() map[string][]string {
 	// Autoscaling group to instance ids mapping
 	insts := make(map[string][]string)
 
 	for {
-		as := autoscaling.New(utils.AwsSess)
 		asIn := &autoscaling.DescribeAutoScalingInstancesInput{}
-		asOut, err := as.DescribeAutoScalingInstances(asIn)
+		asOut, err := svcAsg.DescribeAutoScalingInstances(asIn)
 
 		if err != nil {
 			utils.ExitWithError(err)
@@ -142,14 +146,16 @@ func GetInstanceIdsViaASG() map[string][]string {
 	return insts
 }
 
+// for mocking test
+var svcEc2 ec2iface.EC2API = ec2.New(utils.AwsSess)
+
 // Get EC2 instances
 func GetInstances(input *ec2.DescribeInstancesInput) map[string]string {
 	// Get instance IPs
 	idToIp := make(map[string]string)
 
 	for {
-		ec := ec2.New(utils.AwsSess)
-		ecOut, err := ec.DescribeInstances(input)
+		ecOut, err := svcEc2.DescribeInstances(input)
 
 		if err != nil {
 			utils.ExitWithError(err)

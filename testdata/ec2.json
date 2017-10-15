@@ -1,327 +1,85 @@
-{
-  Reservations: [{
-      Instances: [{
-          AmiLaunchIndex: 0,
-          Architecture: "x86_64",
-          BlockDeviceMappings: [{
-              DeviceName: "/dev/sda1",
-              Ebs: {
-                AttachTime: 2017-10-02 00:08:42 +0000 UTC,
-                DeleteOnTermination: true,
-                Status: "attached",
-                VolumeId: "vol-09c631e74fbeaecd6"
-              }
-            }],
-          ClientToken: "242a3e4c-d98e-4ff8-b375-0d660ee827db_subnet-15584371_1",
-          EbsOptimized: false,
-          EnaSupport: false,
-          Hypervisor: "xen",
-          IamInstanceProfile: {
-            Arn: "arn:aws:iam::320952804938:instance-profile/nodes.k8s.merlingroup.co",
-            Id: "AIPAIRGR4IKUA3C7Q66H6"
-          },
-          ImageId: "ami-0416f666",
-          InstanceId: "i-027bbc5ec8a514331",
-          InstanceType: "m4.large",
-          KeyName: "kubernetes.k8s.merlingroup.co-a6:2b:12:13:56:f9:e2:1c:60:fc:ec:fc:d0:62:4e:fa",
-          LaunchTime: 2017-10-02 00:08:41 +0000 UTC,
-          Monitoring: {
-            State: "enabled"
-          },
-          NetworkInterfaces: [{
-              Attachment: {
-                AttachTime: 2017-10-02 00:08:41 +0000 UTC,
-                AttachmentId: "eni-attach-98e7d7f6",
-                DeleteOnTermination: true,
-                DeviceIndex: 0,
-                Status: "attached"
+[
+    {
+        "Instances": [
+            {
+              "AmiLaunchIndex": 0,
+              "Architecture": "x86_64",
+              "EbsOptimized": false,
+              "EnaSupport": false,
+              "Hypervisor": "xen",
+              "ImageId": "ami-0416f666",
+              "InstanceId": "i-027bbc5ec8a514331",
+              "InstanceType": "m4.large",
+              "Monitoring": {
+                "State": "enabled"
               },
-              Description: "",
-              Groups: [{
-                  GroupId: "sg-a47d84c2",
-                  GroupName: "nodes.k8s.merlingroup.co"
-                }],
-              MacAddress: "02:95:98:db:2e:7c",
-              NetworkInterfaceId: "eni-660d394e",
-              OwnerId: "320952804938",
-              PrivateDnsName: "ip-172-20-74-167.ap-southeast-2.compute.internal",
-              PrivateIpAddress: "172.20.74.167",
-              PrivateIpAddresses: [{
-                  Primary: true,
-                  PrivateDnsName: "ip-172-20-74-167.ap-southeast-2.compute.internal",
-                  PrivateIpAddress: "172.20.74.167"
-                }],
-              SourceDestCheck: true,
-              Status: "in-use",
-              SubnetId: "subnet-15584371",
-              VpcId: "vpc-4690c622"
-            }],
-          Placement: {
-            AvailabilityZone: "ap-southeast-2b",
-            GroupName: "",
-            Tenancy: "default"
-          },
-          PrivateDnsName: "ip-172-20-74-167.ap-southeast-2.compute.internal",
-          PrivateIpAddress: "172.20.74.167",
-          ProductCodes: [{
-              ProductCodeId: "aw0evgkw8e5c1q413zgy5pjce",
-              ProductCodeType: "marketplace"
-            }],
-          PublicDnsName: "",
-          RootDeviceName: "/dev/sda1",
-          RootDeviceType: "ebs",
-          SecurityGroups: [{
-              GroupId: "sg-a47d84c2",
-              GroupName: "nodes.k8s.merlingroup.co"
-            }],
-          SourceDestCheck: true,
-          State: {
-            Code: 16,
-            Name: "running"
-          },
-          StateTransitionReason: "",
-          SubnetId: "subnet-15584371",
-          Tags: [
-            {
-              Key: "k8s.io/role/node",
-              Value: "1"
-            },
-            {
-              Key: "Name",
-              Value: "nodes.k8s.merlingroup.co"
-            },
-            {
-              Key: "aws:autoscaling:groupName",
-              Value: "nodes.k8s.merlingroup.co"
-            },
-            {
-              Key: "KubernetesCluster",
-              Value: "k8s.merlingroup.co"
+              "PrivateDnsName": "ip-172-20-74-167.ap-southeast-2.compute.internal",
+              "PrivateIpAddress": "172.20.74.167",
+              "PublicDnsName": "",
+              "PublicIpAddress": "",
+              "RootDeviceName": "/dev/sda1",
+              "RootDeviceType": "ebs",
+              "Tags": [
+                {
+                  "Key": "k8s.io/role/node",
+                  "Value": "1"
+                },
+                {
+                  "Key": "Name",
+                  "Value": "nodes.k8s"
+                },
+                {
+                  "Key": "aws:autoscaling:groupName",
+                  "Value": "nodes.k8s"
+                },
+                {
+                  "Key": "KubernetesCluster",
+                  "Value": "k8s"
+                }
+              ],
+              "VirtualizationType": "hvm"
             }
-          ],
-          VirtualizationType: "hvm",
-          VpcId: "vpc-4690c622"
-        }],
-      OwnerId: "320952804938",
-      RequesterId: "226008221399",
-      ReservationId: "r-06fd6ffca7d3409ef"
-    }]
-} <nil>
-{
-  Reservations: [{
-      Instances: [{
-          AmiLaunchIndex: 0,
-          Architecture: "x86_64",
-          BlockDeviceMappings: [{
-              DeviceName: "/dev/sda1",
-              Ebs: {
-                AttachTime: 2017-10-02 00:01:14 +0000 UTC,
-                DeleteOnTermination: true,
-                Status: "attached",
-                VolumeId: "vol-0fd28a866ea76de7b"
-              }
-            }],
-          ClientToken: "22b51a9c-5788-41c3-9608-20e8ae8fd7d5_subnet-93474fe5_1",
-          EbsOptimized: false,
-          EnaSupport: false,
-          Hypervisor: "xen",
-          IamInstanceProfile: {
-            Arn: "arn:aws:iam::320952804938:instance-profile/nodes.k8s.merlingroup.co",
-            Id: "AIPAIRGR4IKUA3C7Q66H6"
-          },
-          ImageId: "ami-0416f666",
-          InstanceId: "i-070659b1d1758f205",
-          InstanceType: "m4.large",
-          KeyName: "kubernetes.k8s.merlingroup.co-a6:2b:12:13:56:f9:e2:1c:60:fc:ec:fc:d0:62:4e:fa",
-          LaunchTime: 2017-10-02 00:01:13 +0000 UTC,
-          Monitoring: {
-            State: "enabled"
-          },
-          NetworkInterfaces: [{
-              Attachment: {
-                AttachTime: 2017-10-02 00:01:13 +0000 UTC,
-                AttachmentId: "eni-attach-cdc78026",
-                DeleteOnTermination: true,
-                DeviceIndex: 0,
-                Status: "attached"
+        ]
+    },
+    {
+        "Instances": [
+            {
+              "AmiLaunchIndex": 0,
+              "Architecture": "x86_64",
+              "EbsOptimized": false,
+              "EnaSupport": false,
+              "Hypervisor": "xen",
+              "ImageId": "ami-0416f666",
+              "InstanceId": "i-070659b1d1758f205",
+              "InstanceType": "m4.large",
+              "Monitoring": {
+                "State": "enabled"
               },
-              Description: "",
-              Groups: [{
-                  GroupId: "sg-a47d84c2",
-                  GroupName: "nodes.k8s.merlingroup.co"
-                }],
-              MacAddress: "06:e1:2f:f3:b2:ea",
-              NetworkInterfaceId: "eni-49f2ba73",
-              OwnerId: "320952804938",
-              PrivateDnsName: "ip-172-20-52-235.ap-southeast-2.compute.internal",
-              PrivateIpAddress: "172.20.52.235",
-              PrivateIpAddresses: [{
-                  Primary: true,
-                  PrivateDnsName: "ip-172-20-52-235.ap-southeast-2.compute.internal",
-                  PrivateIpAddress: "172.20.52.235"
-                }],
-              SourceDestCheck: true,
-              Status: "in-use",
-              SubnetId: "subnet-93474fe5",
-              VpcId: "vpc-4690c622"
-            }],
-          Placement: {
-            AvailabilityZone: "ap-southeast-2a",
-            GroupName: "",
-            Tenancy: "default"
-          },
-          PrivateDnsName: "ip-172-20-52-235.ap-southeast-2.compute.internal",
-          PrivateIpAddress: "172.20.52.235",
-          ProductCodes: [{
-              ProductCodeId: "aw0evgkw8e5c1q413zgy5pjce",
-              ProductCodeType: "marketplace"
-            }],
-          PublicDnsName: "",
-          RootDeviceName: "/dev/sda1",
-          RootDeviceType: "ebs",
-          SecurityGroups: [{
-              GroupId: "sg-a47d84c2",
-              GroupName: "nodes.k8s.merlingroup.co"
-            }],
-          SourceDestCheck: true,
-          State: {
-            Code: 16,
-            Name: "running"
-          },
-          StateTransitionReason: "",
-          SubnetId: "subnet-93474fe5",
-          Tags: [
-            {
-              Key: "Name",
-              Value: "nodes.k8s.merlingroup.co"
-            },
-            {
-              Key: "aws:autoscaling:groupName",
-              Value: "nodes.k8s.merlingroup.co"
-            },
-            {
-              Key: "KubernetesCluster",
-              Value: "k8s.merlingroup.co"
-            },
-            {
-              Key: "k8s.io/role/node",
-              Value: "1"
+              "PrivateDnsName": "ip-172-20-52-235.ap-southeast-2.compute.internal",
+              "PrivateIpAddress": "172.20.52.235",
+              "PublicDnsName": "",
+              "RootDeviceName": "/dev/sda1",
+              "RootDeviceType": "ebs",
+              "Tags": [
+                {
+                  "Key": "Name",
+                  "Value": "master.k8s"
+                },
+                {
+                  "Key": "aws:autoscaling:groupName",
+                  "Value": "master.k8s"
+                },
+                {
+                  "Key": "KubernetesCluster",
+                  "Value": "k8s"
+                },
+                {
+                  "Key": "k8s.io/role/node",
+                  "Value": "1"
+                }
+              ],
+              "VirtualizationType": "hvm"
             }
-          ],
-          VirtualizationType: "hvm",
-          VpcId: "vpc-4690c622"
-        }],
-      OwnerId: "320952804938",
-      RequesterId: "226008221399",
-      ReservationId: "r-06b92854e3fdc6d8e"
-    }]
-} <nil>
-{
-  Reservations: [{
-      Instances: [{
-          AmiLaunchIndex: 0,
-          Architecture: "x86_64",
-          BlockDeviceMappings: [{
-              DeviceName: "/dev/sda1",
-              Ebs: {
-                AttachTime: 2017-10-02 00:16:39 +0000 UTC,
-                DeleteOnTermination: true,
-                Status: "attached",
-                VolumeId: "vol-04b1faa25bba66fed"
-              }
-            }],
-          ClientToken: "83b12a42-61f2-4d11-8650-baeb293acfd4_subnet-e02160b9_1",
-          EbsOptimized: false,
-          EnaSupport: false,
-          Hypervisor: "xen",
-          IamInstanceProfile: {
-            Arn: "arn:aws:iam::320952804938:instance-profile/nodes.k8s.merlingroup.co",
-            Id: "AIPAIRGR4IKUA3C7Q66H6"
-          },
-          ImageId: "ami-0416f666",
-          InstanceId: "i-0af7eb05c83b6c591",
-          InstanceType: "m4.large",
-          KeyName: "kubernetes.k8s.merlingroup.co-a6:2b:12:13:56:f9:e2:1c:60:fc:ec:fc:d0:62:4e:fa",
-          LaunchTime: 2017-10-02 00:16:39 +0000 UTC,
-          Monitoring: {
-            State: "enabled"
-          },
-          NetworkInterfaces: [{
-              Attachment: {
-                AttachTime: 2017-10-02 00:16:39 +0000 UTC,
-                AttachmentId: "eni-attach-20624841",
-                DeleteOnTermination: true,
-                DeviceIndex: 0,
-                Status: "attached"
-              },
-              Description: "",
-              Groups: [{
-                  GroupId: "sg-a47d84c2",
-                  GroupName: "nodes.k8s.merlingroup.co"
-                }],
-              MacAddress: "0a:a2:f3:eb:17:a4",
-              NetworkInterfaceId: "eni-1e7cfe12",
-              OwnerId: "320952804938",
-              PrivateDnsName: "ip-172-20-123-213.ap-southeast-2.compute.internal",
-              PrivateIpAddress: "172.20.123.213",
-              PrivateIpAddresses: [{
-                  Primary: true,
-                  PrivateDnsName: "ip-172-20-123-213.ap-southeast-2.compute.internal",
-                  PrivateIpAddress: "172.20.123.213"
-                }],
-              SourceDestCheck: true,
-              Status: "in-use",
-              SubnetId: "subnet-e02160b9",
-              VpcId: "vpc-4690c622"
-            }],
-          Placement: {
-            AvailabilityZone: "ap-southeast-2c",
-            GroupName: "",
-            Tenancy: "default"
-          },
-          PrivateDnsName: "ip-172-20-123-213.ap-southeast-2.compute.internal",
-          PrivateIpAddress: "172.20.123.213",
-          ProductCodes: [{
-              ProductCodeId: "aw0evgkw8e5c1q413zgy5pjce",
-              ProductCodeType: "marketplace"
-            }],
-          PublicDnsName: "",
-          RootDeviceName: "/dev/sda1",
-          RootDeviceType: "ebs",
-          SecurityGroups: [{
-              GroupId: "sg-a47d84c2",
-              GroupName: "nodes.k8s.merlingroup.co"
-            }],
-          SourceDestCheck: true,
-          State: {
-            Code: 16,
-            Name: "running"
-          },
-          StateTransitionReason: "",
-          SubnetId: "subnet-e02160b9",
-          Tags: [
-            {
-              Key: "aws:autoscaling:groupName",
-              Value: "nodes.k8s.merlingroup.co"
-            },
-            {
-              Key: "k8s.io/role/node",
-              Value: "1"
-            },
-            {
-              Key: "KubernetesCluster",
-              Value: "k8s.merlingroup.co"
-            },
-            {
-              Key: "Name",
-              Value: "nodes.k8s.merlingroup.co"
-            }
-          ],
-          VirtualizationType: "hvm",
-          VpcId: "vpc-4690c622"
-        }],
-      OwnerId: "320952804938",
-      RequesterId: "226008221399",
-      ReservationId: "r-03e30f2c8a72ea62a"
-    }]
-}
+        ]
+    }
+]

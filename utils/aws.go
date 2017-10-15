@@ -15,7 +15,10 @@ const (
 
 // Global AWS session
 // Also can be used for testing stud
-var AwsSess *session.Session
+// Default empty session, you need to call
+// GetSession on each command to get
+// The right setting from persistent flags
+var AwsSess *session.Session = session.Must(session.NewSession())
 
 // Get AWS via ENV or profile options
 func GetSession(profile, region string) *session.Session {

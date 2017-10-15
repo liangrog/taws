@@ -1,0 +1,20 @@
+[
+    {
+      "AutoScalingGroupName": "nodes.k8s",
+      "AvailabilityZone": "ap-southeast-2b",
+      "HealthStatus": "HEALTHY",
+      "InstanceId": "i-027bbc5ec8a514331",
+      "LaunchConfigurationName": "nodes.k8s-20171001235907",
+      "LifecycleState": "InService",
+      "ProtectedFromScaleIn": false
+    },
+    {
+      "AutoScalingGroupName": "master-ap-southeast-2b.masters.k8s",
+      "AvailabilityZone": "ap-southeast-2b",
+      "HealthStatus": "HEALTHY",
+      "InstanceId": "i-042d5c8d0c74e3b1e",
+      "LaunchConfigurationName": "master-ap-southeast-2b.masters.k8s-20171002004154",
+      "LifecycleState": "InService",
+      "ProtectedFromScaleIn": false
+    }
+]
